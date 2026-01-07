@@ -1,6 +1,4 @@
-#define CONFIG_WIRELESS
-
-#include "zmk-helpers/key-labels/sofle.h"
+#define LANG_DE
 #include "base.keymap"
 
 /{ chosen { zmk,physical-layout = &josefadamcik_sofle_layout; }; };
