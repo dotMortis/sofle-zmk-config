@@ -187,7 +187,7 @@ ZMK_MOD_MORPH(bs_del, bindings = <&kp BSPC>, <&kp DEL>;
               mods = <(MOD_LSFT|MOD_RSFT)>; keep-mods = <MOD_RSFT>;)
 
 // Tap: copy | double-tap: cut.
-ZMK_TAP_DANCE(copy_cut, bindings = <&kp LC(INS)>, <&kp LC(KEY_X)>;
+ZMK_TAP_DANCE(copy_cut, bindings = <&kp LC(KEY_C)>, <&kp LC(KEY_X)>;
               tapping-term-ms = <200>;)
 
 // Sticky shift + leader.
@@ -198,8 +198,6 @@ ZMK_MACRO(leader_sft, bindings = <&sk LSHFT &leader>;)
 #define VOL_DOWN  &hmr RSHFT C_VOL_DN
 
 /* Keymap */
-
-ZMK_CONDITIONAL_LAYER(sys, SYM NUM, FN) // SYM + NUM --> FN.
 
 #define ZMK_BASE_LAYER(name, LN, RN, LT, RT, LM, RM, LB, LE, RE, RB, LH, RH)                 \
     ZMK_LAYER(name, LN RN LT RT LM RM LB LE RE RB LH RH)
@@ -214,6 +212,6 @@ ZMK_BASE_LAYER(Base,
 //├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤─────────────────╮   ╭─────────────────├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
    XXX               &kp KEY_Z         &kp KEY_X         &kp KEY_C         &kp KEY_V         &kp KEY_B        ,XXX              ,    XXX              ,&kp KEY_N         &kp KEY_M         &kp KEY_COMMA     &kp KEY_DOT       &kp KEY_MINUS     XXX              ,
 //╰─────────────────┴─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┴─────────────────╯
-                                       XXX               XXX               &lt SYM TAB       &lt_spc NUM 0     &lt NAV RET      ,    &kp RET           SMART_NUM         MAGIC_SHIFT       XXX               XXX
+                                       &copy_cut         &bs_del           &lt SYM TAB       &lt_spc NUM 0     &lt NAV RET      ,    &kp RET           &lt_spc FN 0      MAGIC_SHIFT       &bs_del           &kp LC(KEY_V)
 //                                    ╰─────────────────┴─────────────────┴─────────────────┴─────────────────┴─────────────────╯   ╰─────────────────┴─────────────────┴─────────────────┴─────────────────┴─────────────────╯
 )
