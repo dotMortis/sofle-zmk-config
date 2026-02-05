@@ -86,10 +86,25 @@ HRMs are configured to be "timer-less" and highly resistant to misfires:
 - `/config/west.yml`: Pinning of ZMK version (`v0.3`) and external modules.
 - `/build.yaml`: GitHub Actions build matrix configuration.
 
+## 🤖 Agent Orchestration & Workflow
+
+This project uses a hierarchical agent model to ensure safety and precision.
+
+1.  **Planner (Director)**: The main agent acts as the project director. It is responsible for analyzing user requests, performing research, and drafting a comprehensive plan. It delegates specific execution tasks to subagents.
+2.  **Workflow**:
+    *   **Research & Planning**: The Planner explores the codebase and drafts a step-by-step plan.
+    *   **User Approval**: The plan is presented to the user for explicit approval.
+    *   **Execution (Builder)**: Once approved, the Builder (main agent) coordinates the execution. The Builder may use subagents for specialized tasks or execute them directly if more efficient.
+3.  **Subagent Restrictions**: 
+    *   Subagents are **not** allowed to execute plans or make significant structural decisions on their own.
+    *   They must be directed by the Planner/Builder for specific, scoped tasks.
+    *   They focus on *how* to implement a specific behavior or fix, rather than *what* should be done at a project level.
+
 ## ⚠️ Guidelines for Changes
 
 1. **Maintain Alignment**: When editing layers in `base.keymap`, ensure the columns remain aligned for readability.
 2. **Prefer Modules**: If adding a new complex behavior, check if there is an existing ZMK module in `west.yml` that handles it.
 3. **Verify Build**: Always run `just build sofle` after making changes to ensure the Devicetree compiles correctly.
 4. **No Direct Keycodes**: Avoid using raw ZMK keycodes (e.g., `&kp LBKT`) directly in the keymap; use the `KEY_*` aliases from `keys_de.h` to ensure German layout compatibility.
-5. **Kconfig**: System-level settings like Bluetooth power, sleep timeouts, and mouse support should be modified in `config/sofle.conf`.
+5. **No Commits/Pushes**: Do **not** use git to commit or push changes. The user will handle all version control operations. Focus exclusively on local file modifications and verification.
+6. **Kconfig**: System-level settings like Bluetooth power, sleep timeouts, and mouse support should be modified in `config/sofle.conf`.
