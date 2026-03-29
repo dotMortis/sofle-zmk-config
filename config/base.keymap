@@ -89,33 +89,12 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 #include "leader.dtsi"
 #include "mouse.dtsi"
 
-/* Nav cluster */
-
-// Trigger tap-action on all interrupts.
-#define MT_CORE                                                                \
-  flavor = "tap-preferred";                                                    \
-  tapping-term-ms = <220>;                                                     \
-  quick-tap-ms = <220>;                                                        \
-  hold-trigger-key-positions = <0>;
-
-&mt { MT_CORE };
-
-ZMK_HOLD_TAP(mt_home, bindings = <&masked_home>, <&kp>; MT_CORE)
-ZMK_HOLD_TAP(mt_end, bindings = <&masked_end>, <&kp>; MT_CORE)
-
-#define NAV_LEFT  &mt_home 0   LEFT  // Tap: left  | Long-tap: start of line.
-#define NAV_RIGHT &mt_end 0    RIGHT // Tap: right | Long-tap: end   of line.
-#define NAV_UP    &mt LC(HOME) UP    // Tap: up    | Long-tap: start of doc.
-#define NAV_DOWN  &mt LC(END)  DOWN  // Tap: down  | Long-tap: end   of doc.
-#define NAV_BSPC  &mt LC(BSPC) BSPC  // Tap: bspc  | Long-tap: delete word bwd.
-#define NAV_DEL   &mt LC(DEL)  DEL   // Tap: del   | Long-tap: delete word fwd.
-
-// Mask CTRL on left/right hold to avoid accidental jumps to start/end of doc.
-#define MASK_MODS(NAME, MODS, BINDING)                                         \
-  ZMK_MOD_MORPH(NAME, bindings = <BINDING>, <BINDING>; mods = <MODS>;)
-
-MASK_MODS(masked_home, (MOD_LCTL), &kp HOME)
-MASK_MODS(masked_end,  (MOD_LCTL), &kp END)
+/* Navigation layer (vim-style HJKL on right homerow)
+   - HJKL: arrows (use left hmr for Shift+select, left hml for Ctrl+word-jump)
+   - PGUP/DN on RT2/RB2 (above/below arrow cluster)
+   - HOME/END/DEL on bottom row
+   - BSPC on middle thumb (RH2)
+*/
 
 /* Magic-shift & auto-layers */
 
@@ -216,19 +195,19 @@ ZMK_BASE_LAYER(Base,
 //├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤─────────────────╮   ╭─────────────────├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
    XXX               &kp KEY_Z         &kp KEY_X         &kp KEY_C         &kp KEY_V         &kp KEY_B        ,XXX              ,    XXX              ,&kp KEY_N         &kp KEY_M         &kp KEY_COMMA     &kp KEY_DOT       &kp KEY_MINUS     XXX              ,
 //╰─────────────────┴─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┴─────────────────╯
-                                       &copy_cut         &bs_del           &lt SYM TAB       &lt_spc NUM 0     &lt NAV RET      ,    &kp RET           &lt_spc FN 0      MAGIC_SHIFT       &bs_del           &kp LC(KEY_V)
+                                       &copy_cut         &kp LC(KEY_V)     &lt SYM TAB       &lt_spc NUM 0     &lt NAV RET      ,    &kp RET           &lt_spc FN 0      &bs_del           MAGIC_SHIFT       XXX
 //                                    ╰─────────────────┴─────────────────┴─────────────────┴─────────────────┴─────────────────╯   ╰─────────────────┴─────────────────┴─────────────────┴─────────────────┴─────────────────╯
 )
 
 ZMK_BASE_LAYER(NAV,
 //╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮                                       ╭─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────╮
-   ___               ___               ___               ___               ___               ___              ,                                        ___               ___               ___               ___               ___               ___              ,
+   ___               ___               ___               ___               ___               ___              ,                                        ___               ___               ___               ___               ___               XXX              ,
 //├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤                                       ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
-   ___               ___               ___               ___               ___               ___              ,                                        ___               ___               ___               ___               ___               ___              ,
+   ___               XXX               XXX               XXX               XXX               XXX              ,                                        XXX               &kp PAGE_UP       &kp END           XXX               XXX               XXX              ,
 //├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤                                       ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
-   ___               ___               ___               ___               ___               ___              ,                                        ___               ___               ___               ___               ___               ___              ,
+   ___               ___               ___               ___               ___               ___              ,                                        &kp LEFT          &kp DOWN          &kp UP            &kp RIGHT          XXX              XXX              ,
 //├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤─────────────────╮   ╭─────────────────├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤
-   ___               ___               ___               ___               ___               ___              ,___              ,    ___              ,___               ___               ___               ___               ___               ___              ,
+   ___               XXX               XXX               XXX               XXX               XXX              ,___              ,    ___              ,XXX               &kp PAGE_DOWN     &kp HOME          ___               ___               ___              ,
 //╰─────────────────┴─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┤   ├─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┴─────────────────╯
                                        ___               ___               ___               ___               ___              ,    ___               ___               ___               ___               ___
 //                                    ╰─────────────────┴─────────────────┴─────────────────┴─────────────────┴─────────────────╯   ╰─────────────────┴─────────────────┴─────────────────┴─────────────────┴─────────────────╯
