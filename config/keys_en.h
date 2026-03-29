@@ -48,7 +48,7 @@
 #define KEY_EXCLAMATION EXCLAMATION   // !
 #define KEY_QUOTE DQT       // "
 #define KEY_DOLLAR DOLLAR      // $
-#define KEY_PERCENT PRECENT    // %
+#define KEY_PERCENT PERCENT    // %
 #define KEY_AMPERSAND AMPS     // &
 #define KEY_SLASH SLASH       // /
 #define KEY_LEFT_PAREN LPAR  // (
